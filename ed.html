@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caesar Cipher</title>
+    <link rel="stylesheet" href="ed.css">
+    <link rel="cpp" href="encrypt_decrypt.cpp">
+
+</head>
+<body>
+    <h1>Caesar Cipher</h1>
+    <div class="input-group">
+        <label for="message">Enter your message:</label>
+        <input type="text" id="message" placeholder="Type your message here">
+    </div>
+    <div class="input-group">
+        <label for="shift">Shift value (1-25):</label>
+        <input type="number" id="shift" min="1" max="25" placeholder="Enter shift value">
+    </div>
+    <button disabled>Encrypt</button>
+    <button disabled>Decrypt</button>
+    <div id="result">
+        Note: This is a static display. For interactive encryption/decryption, please refer to the C++ code or add JavaScript.
+    </div>
+</body>
+</html>
