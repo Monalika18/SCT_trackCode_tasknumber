@@ -1,4 +1,4 @@
-Caesar Cipher Web App
+Caesar Cipher Web
 
 A simple web application that implements the Caesar Cipher encryption and decryption algorithm using HTML, CSS, and JavaScript.
 
