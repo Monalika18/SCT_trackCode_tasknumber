@@ -4,9 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caesar Cipher</title>
-    <link rel="stylesheet" href="ed.css">
-    <link rel="cpp" href="encrypt_decrypt.cpp">
-
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <h1>Caesar Cipher</h1>
@@ -18,10 +63,76 @@
         <label for="shift">Shift value (1-25):</label>
         <input type="number" id="shift" min="1" max="25" placeholder="Enter shift value">
     </div>
-    <button disabled>Encrypt</button>
-    <button disabled>Decrypt</button>
-    <div id="result">
-        Note: This is a static display. For interactive encryption/decryption, please refer to the C++ code or add JavaScript.
-    </div>
+    <button onclick="encrypt()">Encrypt</button>
+    <button onclick="decrypt()">Decrypt</button>
+    <div id="result"></div>
+
+    <script>
+        function caesarEncrypt(text, shift) {
+            let result = "";
+            for (let c of text) {
+                if (/[a-zA-Z]/.test(c)) {
+                    let base = /[A-Z]/.test(c) ? 'A'.charCodeAt(0) : 'a'.charCodeAt(0);
+                    result += String.fromCharCode((c.charCodeAt(0) - base + shift) % 26 + base);
+                } else {
+                    result += c;
+                }
+            }
+            return result;
+        }
+
+        function caesarDecrypt(text, shift) {
+            return caesarEncrypt(text, 26 - (shift % 26));
+        }
+
+        function validateShift(shift) {
+            const numShift = parseInt(shift);
+            return !isNaN(numShift) && numShift >= 1 && numShift <= 25;
+        }
+
+        function encrypt() {
+            const message = document.getElementById('message').value;
+            const shift = document.getElementById('shift').value;
+            const resultDiv = document.getElementById('result');
+
+            if (!message || !shift) {
+                resultDiv.innerHTML = "Please fill in both fields!";
+                resultDiv.style.display = "block";
+                return;
+            }
+
+            if (!validateShift(shift)) {
+                resultDiv.innerHTML = "Shift must be a number between 1 and 25!";
+                resultDiv.style.display = "block";
+                return;
+            }
+
+            const encrypted = caesarEncrypt(message, parseInt(shift));
+            resultDiv.innerHTML = `Encrypted message: ${encrypted}`;
+            resultDiv.style.display = "block";
+        }
+
+        function decrypt() {
+            const message = document.getElementById('message').value;
+            const shift = document.getElementById('shift').value;
+            const resultDiv = document.getElementById('result');
+
+            if (!message || !shift) {
+                resultDiv.innerHTML = "Please fill in both fields!";
+                resultDiv.style.display = "block";
+                return;
+            }
+
+            if (!validateShift(shift)) {
+                resultDiv.innerHTML = "Shift must be a number between 1 and 25!";
+                resultDiv.style.display = "block";
+                return;
+            }
+
+            const decrypted = caesarDecrypt(message, parseInt(shift));
+            resultDiv.innerHTML = `Decrypted message: ${decrypted}`;
+            resultDiv.style.display = "block";
+        }
+    </script>
 </body>
 </html>
